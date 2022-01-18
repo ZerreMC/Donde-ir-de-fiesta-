@@ -41,7 +41,7 @@ struct V_grups{
     int n;
 };
 
-void obrir_fitxer(ifstream &f_in){//,string nom){ //TREURE STRING
+void obrir_fitxer(ifstream &f_in){
 //Pre: cert
 //Post: retorna una variable ifstream associada al primer fitxer existent de nom llegit de teclat
     string nom;
@@ -56,8 +56,8 @@ void obrir_fitxer(ifstream &f_in){//,string nom){ //TREURE STRING
 }
 
 void inserir_grup(V_grups& grups, Grup nou){
-//Pre: grups.n=N, 0<=N<MAX_G i grups.t[0..N-1] ordenat alfabèticament per grup
-//Post: s'ha inserit el grup nou a grups respectant l'ordre alfabètic i grups.n=N+1
+//Pre: grups.n=N, 0<=N<MAX_G i grups.t[0..N-1] ordenat alfabÃ¨ticament per grup
+//Post: s'ha inserit el grup nou a grups respectant l'ordre alfabÃ¨tic i grups.n=N+1
     int i=grups.n-1;
     while(i>=0 and nou.nom < grups.t[i].nom){
         grups.t[i+1]=grups.t[i];
@@ -80,7 +80,7 @@ Grup inicialitza(){
 
 void mostrar_grup(Grup g){
 //Pre: --
-//Post: mostra la informació de g
+//Post: mostra la informaciÃ³ de g
     if(g.actiu) cout<<" + ";
     else cout<<" - ";
     cout<<left<<setw(25)<<setfill(' ')<<g.nom<<" "<<setw(3)<<setfill(' ')<<right<<g.n_anat<<"/"<<g.n_fets<<endl;//<<": "<<g.nom<<endl;
@@ -97,7 +97,7 @@ void mostrar_estadistiques_grups(const V_grups &grups){
 
 void omplir_vector_grups( V_grups &grups){
 //Pre: cert
-//Post: 0<=grups.n<=MAX_G i grups.t[0..grups.n-1] conté els grups del fitxer introduït per teclat ordenats alfabèticament
+//Post: 0<=grups.n<=MAX_G i grups.t[0..grups.n-1] contÃ© els grups del fitxer introduÃ¯t per teclat ordenats alfabÃ¨ticament
     cout<<"Nom del fitxer dels grups: ";
     ifstream f_in;
     obrir_fitxer(f_in);//,"grups.txt");
@@ -113,7 +113,7 @@ void omplir_vector_grups( V_grups &grups){
 
 Concert llegir_concert(ifstream& f_in){
 //Pre: f_in obert i no acabat
-//Post: es retorna el concert llegit de f_in, pot ser buit si després de la 1a lectura es detecta el final d'f_in
+//Post: es retorna el concert llegit de f_in, pot ser buit si desprÃ©s de la 1a lectura es detecta el final d'f_in
     Concert c;
     f_in>>c.inici.dia;
     if(not f_in.eof())
@@ -123,7 +123,7 @@ Concert llegir_concert(ifstream& f_in){
 
 Concert llegir_concert(){
 //Pre: cert
-//Post: es retorna el concert llegit de teclat, si al llegir el dia es detecta l'EOS, el dia és EOS i els altres camps tenen valors indeterminats
+//Post: es retorna el concert llegit de teclat, si al llegir el dia es detecta l'EOS, el dia Ã©s EOS i els altres camps tenen valors indeterminats
     Concert c;
     cin>>c.inici.dia;
     if(c.inici.dia!=EOS)
@@ -142,7 +142,7 @@ Dia_hora llegir_dia(){
 
 bool passa_abans(Dia_hora a, Dia_hora b){
 //Pre: cert
-//Post: retorna cert si el dia i hora d'a és anterior que el de b (passa primer a que b)i fals altrament
+//Post: retorna cert si el dia i hora d'a Ã©s anterior que el de b (passa primer a que b)i fals altrament
     bool va_primer=a.any<b.any;
     if(a.any==b.any){
         va_primer=a.mes<b.mes;
@@ -159,7 +159,7 @@ bool passa_abans(Dia_hora a, Dia_hora b){
 
 bool mateix_dia(Dia_hora d1, Dia_hora d2){
 //Pre: cert
-//Post: retorna true si el dia de d1 és el mateix que el de d2 i fals altrament
+//Post: retorna true si el dia de d1 Ã©s el mateix que el de d2 i fals altrament
     return d1.any==d2.any and d1.mes==d2.mes and d1.dia==d2.dia;
 }
 
@@ -177,8 +177,8 @@ bool mateix_concert(Concert a, Concert b){
 
 
 bool es_menor(Concert c1, Concert c2, char criteri){
-//Pre: criteri és 'G','L', 'D' o 'E'
-//Post: retorna true si c1 és menro que c2 tenint en compte el grup si criteri és 'G', el lloc si és 'L', la data d'inici si 'D' o l'esdeveniment si 'E'
+//Pre: criteri Ã©s 'G','L', 'D' o 'E'
+//Post: retorna true si c1 Ã©s menro que c2 tenint en compte el grup si criteri Ã©s 'G', el lloc si Ã©s 'L', la data d'inici si 'D' o l'esdeveniment si 'E'
     bool menor = c1.grup<c2.grup;
     if(criteri=='G'){
         if(c1.grup==c2.grup){
@@ -216,8 +216,8 @@ void inserir(Concert nou, V_concerts& programats, char ordre){
 }
 
 void apareix_i_pos(string grup, const V_grups& grups, bool& trobat, int& pos){
-//Pre: 0<=grups.n<=MAX_P i grups.t[0..grups.n-1] ordenat alfabèticament per grup
-//Post: trobat és true si per algun 0<=pos<N grups.t[pos].grup==grup i fals altrament, si trobat és fals pos és la posició on hauria d'aparèixer el grup si apareixés a grups ordenadament.
+//Pre: 0<=grups.n<=MAX_P i grups.t[0..grups.n-1] ordenat alfabÃ¨ticament per grup
+//Post: trobat Ã©s true si per algun 0<=pos<N grups.t[pos].grup==grup i fals altrament, si trobat Ã©s fals pos Ã©s la posiciÃ³ on hauria d'aparÃ¨ixer el grup si apareixÃ©s a grups ordenadament.
     int esq=0, dret=grups.n-1;
     trobat=false;
     while(esq<=dret and not trobat){
@@ -231,8 +231,8 @@ void apareix_i_pos(string grup, const V_grups& grups, bool& trobat, int& pos){
 
 
 void afegir(Concert nou,V_concerts& programats,V_grups &grups){
-//Pre: NC=programats.n i NG=grups.n i 0<=NC<=MAX_C i 0<=NG<=MAX_G i programats.t[0..NC-1] ordenat per grup i data i grups.t[0..NG-1] ordenat per grup alfabèticament
-//Post: s'ha afegit el concert nou a programats i s'ha comptat a les estadístiques de grups si hi cap, si nou.grup no aparaixia a grups.t[0...NG-1] i NG<MAX_G, s'ha inserit el nou grup i grups.n=NG+1
+//Pre: NC=programats.n i NG=grups.n i 0<=NC<=MAX_C i 0<=NG<=MAX_G i programats.t[0..NC-1] ordenat per grup i data i grups.t[0..NG-1] ordenat per grup alfabÃ¨ticament
+//Post: s'ha afegit el concert nou a programats i s'ha comptat a les estadÃ­stiques de grups si hi cap, si nou.grup no aparaixia a grups.t[0...NG-1] i NG<MAX_G, s'ha inserit el nou grup i grups.n=NG+1
     bool trobat;
     int pos;
     apareix_i_pos(nou.grup,grups,trobat,pos);
@@ -244,7 +244,7 @@ void afegir(Concert nou,V_concerts& programats,V_grups &grups){
 
 void omplir_vector_concerts(V_grups& grups, V_concerts &programats){
 //Pre: cert
-//Post: programats conté els programats que hi havia guardats al fitxer indicat per teclat i les estadístiques guardadaes a grups.t[0..grup.n-1] s'han actualitzat
+//Post: programats contÃ© els programats que hi havia guardats al fitxer indicat per teclat i les estadÃ­stiques guardadaes a grups.t[0..grup.n-1] s'han actualitzat
     cout<<"Nom del fitxer dels concerts: ";
     ifstream f_in;
     obrir_fitxer(f_in);//,"concerts.txt");
@@ -300,7 +300,7 @@ Concert llegir_grup_i_inici(){
 
 void apareix_i_pos(const V_concerts &concerts, Concert c,char ordre, bool& trobat, int &pos){
 //Pre: 0<=concerts.n<MAX_C concerts.t[0..concerts.n-1] ordenat per ordre
-//Post: trobat és cert si existeis un 0<=pos<concers.n pel qual concerts.t[pos] sigui c, altrament trobat és fals i pos és la posició on hauria d'estar c si estigués a concerts.t respectant l'ordre indicat a ordre.
+//Post: trobat Ã©s cert si existeis un 0<=pos<concers.n pel qual concerts.t[pos] sigui c, altrament trobat Ã©s fals i pos Ã©s la posiciÃ³ on hauria d'estar c si estiguÃ©s a concerts.t respectant l'ordre indicat a ordre.
     int esq=0, dret=concerts.n-1;
     trobat=false;
     while(esq<=dret and not trobat){
@@ -314,7 +314,7 @@ void apareix_i_pos(const V_concerts &concerts, Concert c,char ordre, bool& troba
 
 void actualitzar_interes_concerts(V_concerts& programats, V_concerts& confirmats, Grup& g){
 //Pre: 0=programats.n<=MAX_C i 0<=confirmats.n<=MAX_C i programats.t[0..programats.n-1] ordenat per grup i data i hora del concert i confirmats.t[0..confirmats.n-1] per data
-//Post: s'ha actualitat l'interès de tots els concerts de programats.t[0..programats.n-1] i confirmats.t[0..confirmats.n-1] del grup g d'acord amb l'interès de g, les estadístiques de g s'han actualizat d'acord amb programats i confirmats
+//Post: s'ha actualitat l'interÃ¨s de tots els concerts de programats.t[0..programats.n-1] i confirmats.t[0..confirmats.n-1] del grup g d'acord amb l'interÃ¨s de g, les estadÃ­stiques de g s'han actualizat d'acord amb programats i confirmats
     Concert concert_g;
     concert_g.inici.any=0;
     concert_g.grup=g.nom;
@@ -336,7 +336,7 @@ void actualitzar_interes_concerts(V_concerts& programats, V_concerts& confirmats
         }
     }
     n_prog+=n_conf;
-    //s'actualitzen les estadístiques del grup
+    //s'actualitzen les estadÃ­stiques del grup
     if(g.actiu){
         g.n_anat+=n_conf;
         g.n_fets+=n_prog;
@@ -349,8 +349,8 @@ void actualitzar_interes_concerts(V_concerts& programats, V_concerts& confirmats
 
 
 void actualitzar_grups(string grup, V_grups& grups,V_concerts& programats, V_concerts& confirmats){
-//Pre: 0<=programats.n<=MAX_C i 0<=grups.n<=MAX_G i grups.t[0..grups.n-1] ordenat alfabèticament per grup
-//Post: s'ha actualitzat grups insritn grup si no hi era o canviant l'interès de grup si hi era, s'ha actualtizat programats, confirmats i les estadístiques de grup en conseqüència
+//Pre: 0<=programats.n<=MAX_C i 0<=grups.n<=MAX_G i grups.t[0..grups.n-1] ordenat alfabÃ¨ticament per grup
+//Post: s'ha actualitzat grups insritn grup si no hi era o canviant l'interÃ¨s de grup si hi era, s'ha actualtizat programats, confirmats i les estadÃ­stiques de grup en conseqÃ¼Ã¨ncia
     Grup g=inicialitza();
     g.nom=grup;
     bool apareix;
@@ -372,7 +372,7 @@ void elimina_concert(V_concerts &vec, int pos){
 
 void confirmar_assistencia(V_grups& grups,V_concerts& programats,V_concerts& confirmats){
 //Pre: 0<=programats.n<=MAX_C i 0<=confirmats.n<=MAX_C i 0<=grups.n<=MAX_G i taules programats.t fins a programats.n-1 i programats.t[0..programats.n-1] ordeant per grup i data i hora d'inici i confirmats.t[0..confirmats.n-1] per data i grups.t[0..grups.n-1] per grup
-//Post: s'ha confirmat l'assistència a un concert llegit de teclat, les taules programats, confirmats i grups s'han modificat en consonància.
+//Post: s'ha confirmat l'assistÃ¨ncia a un concert llegit de teclat, les taules programats, confirmats i grups s'han modificat en consonÃ ncia.
     Concert c=llegir_grup_i_inici();
     bool trobat;
     int pos;
@@ -405,7 +405,7 @@ void confirmar_assistencia(V_grups& grups,V_concerts& programats,V_concerts& con
 }
 void descompte_concert(V_grups& grups, string grup, char tipus_concert){
 //Pre: 0<grups.n<=MAX_G
-//Post: s'ha descomptat un conert a les estadístiques de grups
+//Post: s'ha descomptat un conert a les estadÃ­stiques de grups
     bool trobat;
     int pos;
     apareix_i_pos(grup,grups,trobat,pos);
@@ -417,7 +417,7 @@ void descompte_concert(V_grups& grups, string grup, char tipus_concert){
 
 void cancelar_concert(V_grups& grups,V_concerts& programats, V_concerts& confirmats){
 //Pre: 0<=programats.n<=MAX_C i 0<=confirmats.n<=MAX_C i 0<=grups.n<=MAX_G i programats.t[0..programats.n-1] ordenats per grup i els confirmats per data i hora d'inici i confirmats.t[0..confirmats.n-1] prdenats per data i grups.t[0..grups.n-1] per grup
-//Post: s'ha cancelat el concert indicat per teclat i s'han acutalitzat les taules programats o confirmats eliminant-lo mantenint l'ordre i les estadístiques del seu grup a grups.t
+//Post: s'ha cancelat el concert indicat per teclat i s'han acutalitzat les taules programats o confirmats eliminant-lo mantenint l'ordre i les estadÃ­stiques del seu grup a grups.t
     Concert c=llegir_grup_i_inici();
     bool trobat;
     int pos;
@@ -444,8 +444,8 @@ void cancelar_concert(V_grups& grups,V_concerts& programats, V_concerts& confirm
 
 void eliminar_concerts_abans_dia(V_concerts&programats, V_concerts& confirmats, Dia_hora dia){
 //Pre:0<=programats.n<=MAX_C i 0<=confirmats.n<=MAX_C i programats.t[0..programats.n-1] ordenats per grup i data i hora d'inici i confirmats.t[0..confirmats.n-1] ordenats per data
-//Post:s'han eliminat tots els concerts de programats i confirmats anterior a dia i s'han actualitzat programats.n i confirmats.n en consonància
-    //eliminar el concerts programats.t que està ordenada per grup
+//Post:s'han eliminat tots els concerts de programats i confirmats anterior a dia i s'han actualitzat programats.n i confirmats.n en consonÃ ncia
+    //eliminar el concerts programats.t que estÃ  ordenada per grup
 
     int pos_c=0;
     for(int i=0; i<programats.n;i++){
@@ -456,7 +456,7 @@ void eliminar_concerts_abans_dia(V_concerts&programats, V_concerts& confirmats, 
     }
     programats.n=pos_c;
 
-    // eliminar els concerts de la taula confirmats.t que està ordenada per data
+    // eliminar els concerts de la taula confirmats.t que estÃ  ordenada per data
     int i=0;
     while(i<confirmats.n and passa_abans(confirmats.t[i].inici,dia))i++;
     int n=0;
@@ -472,7 +472,7 @@ void eliminar_concerts_abans_dia(V_concerts&programats, V_concerts& confirmats, 
 void mostrar_fusio_ordenada_distingint(const V_concerts& programats,const V_concerts& confirmats, int pos_inicial, Dia_hora dia){
 //Pre:0<=programats.n<=MAX_C i 0<=confirmats.n<=MAX_C i programats.t[0..programats.n-1]  ordenats per grup i data i hora d'inici i confirmats.t[0..confirmats.n-1] per data
 //Post: es mostren tots els concerts del dia indicant si provenen de la taula de programats o confirmats.
-//mostrem la fusió de vec1 i confirmats
+//mostrem la fusiÃ³ de vec1 i confirmats
     int i1=0,i2=pos_inicial;
     while(i1<programats.n and i2<confirmats.n and mateix_dia(confirmats.t[i2].inici,dia)){
         if(es_menor(programats.t[i1], confirmats.t[i2],'D')){
@@ -535,18 +535,18 @@ void mostrar_concerts_dia(const V_concerts& programats,const V_concerts& confirm
         }
     }
     ordenar(programats_dia,'D');
-    //obtenim la posició del primer concert confirmat d'aquest dia
+    //obtenim la posiciÃ³ del primer concert confirmat d'aquest dia
     int i=0;
     while(i<confirmats.n and passa_abans(confirmats.t[i].inici,dia)) i++;
 
-    //fem la fusió de les dues taules
+    //fem la fusiÃ³ de les dues taules
     mostrar_fusio_ordenada_distingint(programats_dia,confirmats,i,dia);
 }
 
 
 char llegir_opcio(){
 //Pre: cert
-//Post: retorna l'opció llegida de teclat
+//Post: retorna l'opciÃ³ llegida de teclat
     cout<<"Opcio (H: Menu): ";
     char c;
     cin>>c;
@@ -555,7 +555,7 @@ char llegir_opcio(){
 
 void mostrar_menu(){
 //Pre: cet
-//Post: mostra el menú per ptantalla
+//Post: mostra el menÃº per ptantalla
     cout<<setw(20)<<setfill('*')<<" Menu "<<setw(10)<<setfill('*')<<"*"<<endl;
     cout<<"P: Eliminar concerts passats"<<endl;
     cout<<"N: Afegir noves programacions"<<endl;
